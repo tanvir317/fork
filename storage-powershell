@@ -1,0 +1,68 @@
+storage Steps:
+-----------------
+
+Login-AzureRmAccount
+
+Set-AzureRmContext -Subscription " give your subscription id "
+
+New-AzureRmResourceGroup -Name "tanvirrg" -Location 'Southeast Asia'
+
+creation of storage account
+------------------------------------
+
+$demosa3 = New-AzureRmStorageAccount -Name "teststoragetodaytoday1" -ResourceGroupName tanvirrg -Location 'Southeast Asia' -SkuName Standard_GRS -Kind StorageV2 -AccessTier Cool -Tag @{name='dept';value='IT'}
+$demosa3
+
+assigning the context
+----------------------------
+
+$ctx3 = $demosa3.Context
+
+assigning the container
+------------------------------
+
+$newcontainer = "ourcontainer"
+
+Creation of Storage Container
+-------------------------------------
+
+New-AzureStorageContainer -Name $newcontainer -Context $ctx3 -Permission Container
+
+
+Uploading a blob content
+---------------------------------
+
+Set-AzureStorageBlobContent -File "H:\azure\docker.pdf" -Container $newcontainer -Context $ctx3 -Blob "docker.pdf"
+
+
+List of blobs in our storage account
+---------------------------------------------
+Get-AzureStorageBlob -Container $newcontainer -Context $ctx3 | select Name
+
+
+Downloading of blob content
+--------------------------------------
+Get-AzureStorageBlobContent -Blob "docker.pdf" -Container $newcontainer -Destination "H:\azure\test\" -Context $ctx3
+
+$demosa2 | select sku
+
+change the access tier
+----------------------------
+
+$demosa2.AccessTier = "cool"
+
+$demosa2.AccessTier = "Hot"
+
+
+retrieve the keys from storage account
+-------------------------------------------------
+
+$key= (Get-AzureRmStorageAccountKey -ResourceGroupName dineshrg -Name teststoragetodaytoday).value[0]
+$key
+
+Generating new key
+--------------------------
+
+New-AzureRmStorageAccountKey -ResourceGroupName dineshrg -Name teststoragetodaytoday -KeyName key1
+
+
