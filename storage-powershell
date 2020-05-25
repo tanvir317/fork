@@ -64,5 +64,5 @@ Generating new key
 --------------------------
 
 New-AzureRmStorageAccountKey -ResourceGroupName dineshrg -Name teststoragetodaytoday -KeyName key1
-
+update
 
